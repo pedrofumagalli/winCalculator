@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
       
       this.currentOperation = digit;
+      console.log('entrada digito', this.currentOperation);
       this.updateScreen()
     }
 
@@ -25,18 +26,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (this.currentOperationText.innerText === "" && operation !== "C") {
         // change operation
         if (this.previousOperationText.innerText !== "") {
-          this.changeOperation(operation);
+            this.changeOperation(operation);
         }
         return
       }
       // get current and previous value
-      let operationValue;
+      let operationValue
       const  previous = +this.previousOperationText.innerText.split(" ")[0];
+      console.log('o que é', previous);
       const  current = +this.currentOperationText.innerText;
+      console.log('valor current', current)
 
       switch (operation) {
         case "+":
           operationValue = previous + current;
+          console.log ('operationvalue', operationValue);
           this.updateScreen(operationValue, operation, current, previous)
           break;
         case "-":
@@ -56,13 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
           this.processDelOperator();
           break;
         case "CE":
-          processClearCurrentOperation();
+          this.processClearCurrentOperation();
           break;
         case "C":
           this.processClearOperation();
           break;
         case "=":
-          processEqualOperator() 
+          this.processEqualOperator() 
           break;
         
         default:
@@ -99,7 +103,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return
     }
       this.previousOperationText.innerText = 
-        this.previousOperationText.slice(0, -1) + operation;
+        this.previousOperationText + operation;
+        console.log('change operation', previousOperationText);
     }
     //delete the last digit
     processDelOperator() {
@@ -121,8 +126,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // process equal an operation
     processEqualOperator() {
       const operation = previousOperationText.innerText.split(" ")[1];
+      console.log('equal', operation);
       this.processOperation(operation);
-
     }
   }
 
@@ -137,7 +142,6 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         calc.processOperation(value);
       }
-     
     })
   })
 
